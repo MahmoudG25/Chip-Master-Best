@@ -9,7 +9,7 @@ const Footer = () => {
                 <div className="md:max-w-96">
                     <h2 className='text-2xl font-bold text-indigo-600 flex items-center gap-2'>
                         {/* <img alt="" className="h-8" src="..." /> */}
-                        PhonePartsMaster
+                        Chip Master
                     </h2>
                     <p className="mt-6 text-sm">
                         The leading supplier of original mobile phone motherboards and diagnostic services. We ensure quality, reliability, and fast shipping for all your repair needs.
@@ -33,14 +33,14 @@ const Footer = () => {
                         <h2 className="font-semibold mb-5">Get in touch</h2>
                         <div className="text-sm space-y-2">
                             <p>+1 (555) 123-4567</p>
-                            <p>support@phoneparts.com</p>
+                            <p>support@chipmaster.com</p>
                             <p>123 Tech Park, Silicon Valley</p>
                         </div>
                     </div>
                 </div>
             </div>
             <p className="pt-4 text-center text-sm pb-5">
-                Copyright {new Date().getFullYear()} © <Link to="/">PhonePartsMaster</Link>. All Right Reserved.
+                Copyright {new Date().getFullYear()} © <Link to="/">Chip Master</Link>. All Right Reserved.
             </p>
           </div>
         </footer>

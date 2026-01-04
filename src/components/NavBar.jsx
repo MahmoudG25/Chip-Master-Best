@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Sun, Moon, Menu, X } from 'lucide-react';
+import { Sun, Moon, Menu, X, Cpu } from 'lucide-react';
 import Button from './Button';
 import { CiLogin } from "react-icons/ci";
 import { useTheme } from '../contexts/ThemeContext';
@@ -26,11 +26,13 @@ const Navbar = () => {
     <nav className="w-full">
       <div className="w-[95%] md:w-[80%] mx-auto flex items-center justify-between px-4 md:px-6 py-3 md:py-4 shadow rounded-2xl md:rounded-full bg-white dark:bg-slate-800 relative transition-colors mt-2 md:mt-0">
       {/* Logo */}
-      <Link to="/" onClick={closeMenu}>
-        <img 
-          src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/dummyLogo/prebuiltuiDummyLogo.svg" 
-          alt="Logo"
-        />
+      <Link to="/" onClick={closeMenu} className="flex items-center gap-2 group">
+        <div className="p-2 bg-indigo-600 rounded-xl group-hover:bg-indigo-700 transition-colors">
+            <Cpu className="text-white" size={24} />
+        </div>
+        <span className="text-xl font-bold bg-gradient-to-r from-indigo-700 to-indigo-500 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
+            Chip Master
+        </span>
       </Link>
 
       {/* Navigation Menu */}

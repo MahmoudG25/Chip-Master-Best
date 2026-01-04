@@ -178,7 +178,7 @@ const Serves = () => {
             )}
 
             {/* Empty State / Quick Links as Footer */}
-            {!lastResult && matches.length === 0 && !inputCode && (
+            {/* {!lastResult && matches.length === 0 && !inputCode && (
                  <div className="pt-8 hidden md:grid grid-cols-3 gap-4 opacity-60 hover:opacity-100 transition-opacity">
                     <a href={appConfig.links.website || '#'} target="_blank" className="flex flex-col items-center gap-2 group">
                         <div className="p-3 bg-indigo-50 rounded-full text-indigo-600 group-hover:bg-indigo-100 transition-colors">
@@ -199,7 +199,7 @@ const Serves = () => {
                         <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">{lang === 'ar' ? 'طلب' : 'Order'}</span>
                     </a>
                 </div>
-            )}
+            )} */}
 
             {/* Global Scanner Overlay */}
             <ScannerModule 

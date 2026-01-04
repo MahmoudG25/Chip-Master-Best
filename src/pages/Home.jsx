@@ -297,7 +297,7 @@ const Home = () => {
                     font-family: 'Poppins', sans-serif;
                 }
             `}</style>
-            <section className="flex flex-col items-center justify-center mx-auto w-full md:w-[80%] text-center rounded-none md:rounded-2xl py-16 md:py-24 bg-[url('https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/banners/image-1.png')] bg-cover bg-center bg-no-repeat relative overflow-hidden">
+            <section className="flex flex-col items-center justify-center mx-auto w-full md:w-[85%] text-center rounded-none md:rounded-2xl py-16 md:py-24 bg-[url('https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/banners/image-1.png')] bg-cover bg-center bg-no-repeat relative overflow-hidden">
                 <div className="absolute inset-0 bg-black/10 dark:bg-black/40 pointer-events-none" /> {/* Overlay for text contrast */}
                 <div className="relative z-10 px-4">
                   <h1 className="text-2xl md:text-3xl font-medium text-white max-w-2xl mx-auto">Ready to earn more money?</h1>
