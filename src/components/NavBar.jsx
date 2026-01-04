@@ -36,12 +36,10 @@ const Navbar = () => {
       {/* Navigation Menu */}
       <nav 
         className={`
-          max-md:absolute max-md:top-0 max-md:left-0 max-md:overflow-hidden 
           items-center justify-center max-md:h-screen transition-[width] duration-300 bg-white/95 dark:bg-slate-800/95 backdrop-blur 
           flex-col md:flex-row flex gap-8 text-gray-900 dark:text-gray-100 text-sm font-normal z-50
-          ${isOpen ? 'max-md:w-full' : 'max-md:w-0'}
-        `}
-      >
+          md:flex hidden
+        `}>
         <Link 
           to="/" 
           onClick={closeMenu}
@@ -78,15 +76,7 @@ const Navbar = () => {
           Contact
         </Link>
 
-        {/* Close Button (Mobile only) */}
-        <button 
-          onClick={toggleMenu}
-          className="md:hidden text-gray-600 dark:text-gray-400 absolute top-6 right-6 hover:text-gray-900 dark:hover:text-gray-100 transition"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
+
       </nav>
 
       {/* Action Buttons */}
@@ -119,15 +109,7 @@ const Navbar = () => {
             <Button gradientColor="#22C55E">Sign up</Button>
         </Link>
 
-        {/* Open Menu Button (Mobile only) */}
-        <button 
-          onClick={toggleMenu}
-          className="md:hidden text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
+
       </div>
     </div>
     </nav>

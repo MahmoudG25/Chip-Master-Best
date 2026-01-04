@@ -23,7 +23,7 @@ export const Input = ({
         )}
         <input
           className={twMerge(
-            'w-full bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 rounded-xl py-3 px-4 text-sm outline-none transition-all',
+            'w-full bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 rounded-xl py-3.5 px-4 text-sm outline-none transition-all min-h-[48px]',
             'focus:ring-4 focus:ring-indigo-600/10 focus:border-indigo-600',
             'placeholder:text-slate-400 dark:placeholder:text-slate-600',
             Icon && 'ps-11',

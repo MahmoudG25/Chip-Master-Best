@@ -23,35 +23,51 @@ const SliderCompany = () => {
 
   return (
     <>
-      <style>{`
-        .marquee {
-          overflow: hidden;
-          white-space: nowrap;
-        }
+      {/* Mobile View: Grid Layout */}
+      <div className="md:hidden w-[90%] mx-auto mt-14 mb-14">
+        <div className="grid grid-cols-3 gap-8 items-center justify-items-center">
+            {brands.map((brand, index) => (
+            <img
+                key={index}
+                src={brand.logo}
+                alt={brand.name}
+                className="h-8 w-auto opacity-80 hover:opacity-100 transition-opacity duration-300"
+                draggable={false}
+            />
+            ))}
+        </div>
+      </div>
 
-        .marquee-track {
-          display: flex;
-          width: max-content;
-          animation: marquee 12s linear infinite;
-        }
-
-        .marquee:hover .marquee-track {
-          animation-play-state: paused;
-        }
-
-        @keyframes marquee {
-          0% {
-            transform: translateX(0);
+      {/* Desktop View: Marquee Layout */}
+      <div className="hidden md:block marquee w-[80%] mx-auto mt-14 mb-14 relative select-none">
+        <style>{`
+          .marquee {
+            overflow: hidden;
+            white-space: nowrap;
           }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-      `}</style>
 
-      <div className="marquee w-[80%] mx-auto mt-14 mb-14 relative select-none">
+          .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marquee 12s linear infinite;
+          }
+
+          .marquee:hover .marquee-track {
+            animation-play-state: paused;
+          }
+
+          @keyframes marquee {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(-50%);
+            }
+          }
+        `}</style>
+
         {/* fade left */}
-        <div className="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-white to-transparent z-10" />
+        <div className="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-white dark:from-slate-900 to-transparent z-10" />
 
         <div className="marquee-track gap-16 items-center">
           {[...brands, ...brands].map((brand, index) => (
@@ -59,14 +75,14 @@ const SliderCompany = () => {
               key={index}
               src={brand.logo}
               alt={brand.name}
-              className="h-10 md:h-12 w-auto opacity-80 hover:opacity-100 transition-opacity duration-300"
+              className="h-12 w-auto opacity-80 hover:opacity-100 transition-opacity duration-300 contrast-0 grayscale dark:invert"
               draggable={false}
             />
           ))}
         </div>
 
         {/* fade right */}
-        <div className="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-white to-transparent z-10" />
+        <div className="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-white dark:from-slate-900 to-transparent z-10" />
       </div>
     </>
   );

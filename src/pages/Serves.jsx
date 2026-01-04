@@ -90,20 +90,20 @@ const Serves = () => {
             ) : (
                 <>
                 {/* Main Action Card */}
-                <Card padding="none" className="group cursor-pointer border-0 shadow-2xl shadow-indigo-100 dark:shadow-indigo-900/30 hover:shadow-indigo-200 dark:hover:shadow-indigo-900/50 transition-all duration-500 bg-white dark:bg-slate-800">
+                <Card padding="none" className="group cursor-pointer border-0 shadow-2xl shadow-indigo-100 dark:shadow-indigo-900/30 hover:shadow-indigo-200 dark:hover:shadow-indigo-900/50 transition-all duration-500 bg-white dark:bg-slate-800 rounded-[2rem] overflow-hidden">
                     <button 
                     onClick={startCamera}
-                    className="w-full relative overflow-hidden p-10 flex flex-col items-center gap-6"
+                    className="w-full relative overflow-hidden p-6 md:p-10 flex flex-col items-center gap-4 md:gap-6 min-h-[220px] justify-center"
                     >
                     <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 opacity-50 group-hover:opacity-100 transition-opacity" />
-                    <div className="relative w-20 h-20 bg-white dark:bg-slate-700 rounded-2xl flex items-center justify-center border border-indigo-100 dark:border-indigo-800 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-xl shadow-indigo-100 dark:shadow-indigo-900/50">
-                        <Camera size={32} className="text-indigo-600" />
+                    <div className="relative w-16 h-16 md:w-20 md:h-20 bg-white dark:bg-slate-700 rounded-2xl flex items-center justify-center border border-indigo-100 dark:border-indigo-800 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-xl shadow-indigo-100 dark:shadow-indigo-900/50">
+                        <Camera size={28} className="text-indigo-600 md:w-8 md:h-8" />
                     </div>
-                    <div className="text-center relative">
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
+                    <div className="text-center relative z-10">
+                        <h2 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-1">
                         {lang === 'ar' ? 'المسح الذكي' : 'Smart Scan'}
                         </h2>
-                        <p className="text-slate-500 dark:text-slate-400 text-sm max-w-[200px]">
+                        <p className="text-slate-500 dark:text-slate-400 text-xs md:text-sm max-w-[200px] mx-auto">
                         {lang === 'ar' ? 'استخدم الكاميرا لتحليل الرقاقة' : 'Analyze chip via camera'}
                         </p>
                     </div>
@@ -179,7 +179,7 @@ const Serves = () => {
 
             {/* Empty State / Quick Links as Footer */}
             {!lastResult && matches.length === 0 && !inputCode && (
-                 <div className="pt-8 grid grid-cols-3 gap-4 opacity-60 hover:opacity-100 transition-opacity">
+                 <div className="pt-8 hidden md:grid grid-cols-3 gap-4 opacity-60 hover:opacity-100 transition-opacity">
                     <a href={appConfig.links.website || '#'} target="_blank" className="flex flex-col items-center gap-2 group">
                         <div className="p-3 bg-indigo-50 rounded-full text-indigo-600 group-hover:bg-indigo-100 transition-colors">
                             <Globe size={18} />

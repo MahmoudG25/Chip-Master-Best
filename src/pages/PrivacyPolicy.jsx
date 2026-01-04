@@ -6,8 +6,8 @@ const PrivacyPolicy = () => {
     <>
       <Navbar />
 
-      <main className="w-full min-h-screen bg-white dark:bg-slate-900 transition-colors">
-        <div className="w-[80%] mx-auto px-6 py-12">
+      <main className="w-full min-h-screen bg-white dark:bg-slate-900 transition-colors overflow-x-hidden">
+        <div className="w-[90%] md:w-[80%] mx-auto px-4 md:px-6 py-12">
           {/* Header */}
           <div className="mb-12">
             <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-3">

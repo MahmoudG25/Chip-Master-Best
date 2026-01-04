@@ -17,8 +17,8 @@ const Contact = () => {
             
             <main className="flex-grow w-full">
                 {/* Header Section */}
-                <section className="bg-slate-900 dark:bg-slate-950 py-20 text-center text-white relative overflow-hidden transition-colors">
-                     <div className="absolute top-0 left-0 w-full h-full opacity-20">
+                <section className="bg-slate-900 dark:bg-slate-950 py-16 md:py-20 text-center text-white relative overflow-hidden transition-colors w-full">
+                     <div className="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none">
                         <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
                             <path d="M0 100 L 100 0 L 0 0 Z" fill="url(#grad1)" />
                             <defs>
@@ -29,11 +29,11 @@ const Contact = () => {
                             </defs>
                         </svg>
                     </div>
-                    <div className="relative z-10 w-[80%] mx-auto">
+                    <div className="relative z-10 w-[90%] md:w-[80%] mx-auto px-4">
                         <motion.h1 
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="text-4xl md:text-5xl font-bold mb-4"
+                            className="text-3xl md:text-5xl font-bold mb-4"
                         >
                             Get in Touch
                         </motion.h1>
@@ -41,14 +41,14 @@ const Contact = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1 }}
-                            className="text-slate-300 text-lg max-w-xl mx-auto"
+                            className="text-slate-300 text-base md:text-lg max-w-xl mx-auto"
                         >
                             Have a question about a motherboard or need a custom quote? Our team is here to help.
                         </motion.p>
                     </div>
                 </section>
 
-                <div className="w-[80%] mx-auto py-16 grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <div className="w-[90%] md:w-[80%] mx-auto py-12 md:py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
                     {/* Contact Info */}
                     <motion.div 
                         initial={{ opacity: 0, x: -50 }}

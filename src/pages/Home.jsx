@@ -19,7 +19,7 @@ const Home = () => {
             <div className="absolute -bottom-[20%] left-[20%] w-[40%] h-[40%] bg-pink-100/50 rounded-full blur-3xl opacity-60 mix-blend-multiply animate-blob animation-delay-4000" />
         </div>
 
-        <section className="flex flex-col md:flex-row items-center justify-between py-20 gap-12 md:gap-8 w-[80%] mx-auto">
+        <section className="flex flex-col md:flex-row items-center justify-between py-10 md:py-20 gap-8 md:gap-8 w-[90%] md:w-[80%] mx-auto">
           
           {/* Left Content */}
           <div className="flex flex-col items-center md:items-start w-full md:w-1/2 z-10">
@@ -55,11 +55,11 @@ const Home = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-center md:text-left text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-6"
+              className="text-center md:text-left text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight mb-4 md:mb-6"
             >
               Genuine Mobile <br className="hidden md:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600">
-                Phone Motherboards
+                Phone Boards
               </span>
             </motion.h1>
 
@@ -68,7 +68,7 @@ const Home = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-center md:text-left text-lg text-slate-600 dark:text-slate-300 max-w-lg mb-10 leading-relaxed"
+              className="text-center md:text-left text-base md:text-lg text-slate-600 dark:text-slate-300 max-w-lg mb-8 leading-relaxed px-4 md:px-0"
             >
               Your trusted source for original, testing, and unlocked mobile logic boards. 
               We sell high-quality parts and provide expert diagnostic services.
@@ -79,14 +79,13 @@ const Home = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="flex items-center gap-4"
+              className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto px-4 md:px-0"
             >
-              <Link 
-                        to="/auth/register">
-                <Button>Get Started</Button>
+              <Link to="/auth/register" className="w-full sm:w-auto">
+                <Button className="w-full sm:w-auto h-12 text-base">Get Started</Button>
               </Link>
 
-              <button className="flex items-center gap-2 px-6 py-3 rounded-full text-slate-700 dark:text-slate-200 font-medium hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-all active:scale-95 group">
+              <button className="flex items-center justify-center gap-2 px-6 py-3 rounded-full text-slate-700 dark:text-slate-200 font-medium hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-all active:scale-95 group w-full sm:w-auto">
                 <div className="relative flex items-center justify-center size-8 bg-indigo-100 text-indigo-600 rounded-full group-hover:scale-110 transition-transform">
                     <svg className="w-4 h-4 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M8 5v14l11-7z" />
@@ -146,21 +145,21 @@ const Home = () => {
                 We provide comprehensive solutions for mobile phone repairs and parts.
             </motion.p>
             
-            <motion.div className="flex flex-wrap items-center justify-center gap-8 pt-12">
-                <motion.div className="max-w-[30%] w-full hover:-translate-y-0.5 transition duration-300">
-                    <img className="rounded-xl" src="https://images.pexels.com/photos/3520692/pexels-photo-3520692.jpeg" alt="iPhone Logic Board" />
-                    <motion.h3 className="text-base text-slate-900 font-medium mt-3">Original Logic Boards</motion.h3>
-                    <motion.p className="text-xs text-indigo-600 font-medium mt-1">iPhone, Samsung & Pixel</motion.p>
+            <motion.div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 pt-8 md:pt-12 px-4 md:px-0">
+                <motion.div className="w-full md:max-w-[30%] hover:-translate-y-0.5 transition duration-300">
+                    <img className="rounded-xl w-full h-48 object-cover" src="https://images.pexels.com/photos/3520692/pexels-photo-3520692.jpeg" alt="iPhone Logic Board" />
+                    <motion.h3 className="text-base text-slate-900 dark:text-white font-medium mt-3">Original Logic Boards</motion.h3>
+                    <motion.p className="text-xs text-indigo-600 dark:text-indigo-400 font-medium mt-1">iPhone, Samsung & Pixel</motion.p>
                 </motion.div>
-                <motion.div className="max-w-[30%] w-full hover:-translate-y-0.5 transition duration-300">
-                    <img className="rounded-xl" src="https://images.pexels.com/photos/6754837/pexels-photo-6754837.jpeg" alt="Mobile Diagnostics" />
-                    <motion.h3 className="text-base text-slate-900 font-medium mt-3">Phone Diagnostics</motion.h3>
-                    <motion.p className="text-xs text-indigo-600 font-medium mt-1">Power & IC Issues</motion.p>
+                <motion.div className="w-full md:max-w-[30%] hover:-translate-y-0.5 transition duration-300">
+                    <img className="rounded-xl w-full h-48 object-cover" src="https://images.pexels.com/photos/6754837/pexels-photo-6754837.jpeg" alt="Mobile Diagnostics" />
+                    <motion.h3 className="text-base text-slate-900 dark:text-white font-medium mt-3">Phone Diagnostics</motion.h3>
+                    <motion.p className="text-xs text-indigo-600 dark:text-indigo-400 font-medium mt-1">Power & IC Issues</motion.p>
                 </motion.div>
-                <motion.div className="max-w-[30%] w-full hover:-translate-y-0.5 transition duration-300">
-                    <img className="rounded-xl" src="https://images.pexels.com/photos/6755133/pexels-photo-6755133.jpeg" alt="Consultation" />
-                    <motion.h3 className="text-base text-slate-900 font-medium mt-3">Repair Consultation</motion.h3>
-                    <motion.p className="text-xs text-indigo-600 font-medium mt-1">For Repair Shops</motion.p>
+                <motion.div className="w-full md:max-w-[30%] hover:-translate-y-0.5 transition duration-300">
+                    <img className="rounded-xl w-full h-48 object-cover" src="https://images.pexels.com/photos/6755133/pexels-photo-6755133.jpeg" alt="Consultation" />
+                    <motion.h3 className="text-base text-slate-900 dark:text-white font-medium mt-3">Repair Consultation</motion.h3>
+                    <motion.p className="text-xs text-indigo-600 dark:text-indigo-400 font-medium mt-1">For Repair Shops</motion.p>
                 </motion.div>
             </motion.div>
           </motion.div>
@@ -298,26 +297,29 @@ const Home = () => {
                     font-family: 'Poppins', sans-serif;
                 }
             `}</style>
-            <section className="flex flex-col items-center justify-center mx-auto max-md:mx-2 max-md:px-2 max-w-[80%] w-full text-center rounded-2xl py-20 md:py-24 bg-[url('https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/banners/image-1.png')] bg-cover bg-center bg-no-repeat">
-                <h1 className="text-2xl md:text-3xl font-medium text-white max-w-2xl">Ready to earn more money?</h1>
-                <div className="h-[3px] w-32 my-1 bg-gradient-to-l from-transparent to-indigo-600"></div>
-                <p className="text-sm md:text-base text-white max-w-xl">
-                    Join thousands of satisfied technicians. Get 100% original, tested mobile motherboards with a 90-day warranty.
-                </p>
-                <Link to="/auth/register">
-                <button className="px-8 py-2.5 mt-4 text-sm bg-gradient-to-r from-indigo-600 to-violet-500 hover:scale-105 transition duration-300 text-white rounded-full">
-                    Get Started
-                </button>
-                </Link>
-                <div className="mt-9 flex items-center justify-center gap-8 text-indigo-100 text-sm font-medium">
-                  <span className="flex items-center gap-2">
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                    90-Day Warranty
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    24/7 Support
-                  </span>
+            <section className="flex flex-col items-center justify-center mx-auto w-full md:w-[80%] text-center rounded-none md:rounded-2xl py-16 md:py-24 bg-[url('https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/banners/image-1.png')] bg-cover bg-center bg-no-repeat relative overflow-hidden">
+                <div className="absolute inset-0 bg-black/10 dark:bg-black/40 pointer-events-none" /> {/* Overlay for text contrast */}
+                <div className="relative z-10 px-4">
+                  <h1 className="text-2xl md:text-3xl font-medium text-white max-w-2xl mx-auto">Ready to earn more money?</h1>
+                  <div className="h-[3px] w-24 md:w-32 my-2 bg-gradient-to-l from-transparent to-indigo-600 mx-auto"></div>
+                  <p className="text-sm md:text-base text-white max-w-xl mx-auto opacity-90">
+                      Join thousands of satisfied technicians. Get 100% original, tested mobile motherboards with a 90-day warranty.
+                  </p>
+                  <Link to="/auth/register">
+                  <button className="px-8 py-3 mt-6 text-sm font-semibold bg-gradient-to-r from-indigo-600 to-violet-500 hover:scale-105 active:scale-95 transition-all duration-300 text-white rounded-full shadow-lg shadow-indigo-600/20">
+                      Get Started
+                  </button>
+                  </Link>
+                  <div className="mt-8 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 text-indigo-50 text-sm font-medium">
+                    <span className="flex items-center gap-2 bg-white/10 px-4 py-1.5 rounded-full backdrop-blur-sm">
+                      <svg className="w-5 h-5 text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                      90-Day Warranty
+                    </span>
+                    <span className="flex items-center gap-2 bg-white/10 px-4 py-1.5 rounded-full backdrop-blur-sm">
+                      <svg className="w-5 h-5 text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                      24/7 Support
+                    </span>
+                  </div>
                 </div>
             </section>
           </div>

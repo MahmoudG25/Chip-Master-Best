@@ -8,6 +8,8 @@ import Error404 from "./pages/Error404";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
+import BottomNav from "./components/BottomNav";
+
 function App() {
   return (
     <Router>
@@ -22,7 +24,7 @@ function App() {
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/register" element={<Register />} />
       </Routes>
-
+      <BottomNav />
     </Router>
   );
 }

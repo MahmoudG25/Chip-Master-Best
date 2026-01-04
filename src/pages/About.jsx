@@ -15,9 +15,9 @@ const About = () => {
                 }
             `}</style>
             <Navbar />
-            <section className="w-full h-[calc(100vh-100px)] flex items-center justify-center bg-white dark:bg-slate-900 transition-colors">
-              <div className="flex flex-col md:flex-row items-center justify-center gap-10 max-md:px-4">
-                <div className="relative shadow-2xl shadow-indigo-600/40 dark:shadow-indigo-900/50 rounded-2xl overflow-hidden shrink-0">
+            <section className="w-full min-h-[calc(100vh-100px)] flex items-center justify-center bg-white dark:bg-slate-900 transition-colors py-12 md:py-0 overflow-hidden">
+              <div className="flex flex-col md:flex-row items-center justify-center gap-10 px-6 max-w-6xl w-full mx-auto">
+                <div className="relative shadow-2xl shadow-indigo-600/40 dark:shadow-indigo-900/50 rounded-2xl overflow-hidden shrink-0 max-w-full">
                     <img className="max-w-md w-full object-cover rounded-2xl"
                         src="https://images.unsplash.com/photo-1531497865144-0464ef8fb9a9?q=80&w=451&h=451&auto=format&fit=crop"
                         alt="" />
