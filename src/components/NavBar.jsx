@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Sun, Moon } from 'lucide-react';
+import { Sun, Moon, Menu, X } from 'lucide-react';
 import Button from './Button';
 import { CiLogin } from "react-icons/ci";
 import { useTheme } from '../contexts/ThemeContext';
@@ -24,7 +24,7 @@ const Navbar = () => {
 
   return (
     <nav className="w-full">
-      <div className="w-[80%] mx-auto flex items-center justify-between px-6 py-3 md:py-4 shadow rounded-full bg-white dark:bg-slate-800 relative transition-colors">
+      <div className="w-[95%] md:w-[80%] mx-auto flex items-center justify-between px-4 md:px-6 py-3 md:py-4 shadow rounded-2xl md:rounded-full bg-white dark:bg-slate-800 relative transition-colors mt-2 md:mt-0">
       {/* Logo */}
       <Link to="/" onClick={closeMenu}>
         <img 
@@ -110,8 +110,59 @@ const Navbar = () => {
         </Link>
 
 
+        {/* Mobile Menu Toggle */}
+        <button 
+            className="md:hidden p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition"
+            onClick={toggleMenu}
+            aria-label="Toggle menu"
+        >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
     </div>
+
+    {/* Mobile Menu Overlay */}
+    {isOpen && (
+      <div className="md:hidden absolute top0 right-5 z-50 mt-2 w-64 origin-top-right">
+        <div className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-100 dark:border-slate-800 shadow-2xl rounded-2xl overflow-hidden p-2 flex flex-col gap-1">
+          {['Home', 'Services', 'About', 'Order', 'Contact'].map((item) => {
+             const path = item === 'Home' ? '/' : `/${item.toLowerCase().replace('services', 'serves')}`;
+             return (
+              <Link 
+                key={item}
+                to={path} 
+                onClick={closeMenu}
+                className={`
+                  p-4 rounded-xl text-center font-medium text-base transition-colors
+                  ${isActive(path) 
+                    ? 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400' 
+                    : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
+                  }
+                `}
+              >
+                {item}
+              </Link>
+             );
+          })}
+           <div className="h-px bg-slate-100 dark:bg-slate-800 my-2 mx-4" />
+           <div className="grid grid-cols-2 gap-2 p-2">
+            <Link 
+              to="/auth/login" 
+              onClick={closeMenu}
+              className="flex items-center justify-center p-3 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-medium"
+            >
+              Login
+            </Link>
+            <Link 
+              to="/auth/register" 
+              onClick={closeMenu}
+            >
+               <Button className="w-full justify-center" gradientColor="#22C55E">Sign up</Button>
+            </Link>
+           </div>
+        </div>
+      </div>
+    )}
     </nav>
   );
 };

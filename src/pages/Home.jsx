@@ -132,7 +132,7 @@ const Home = () => {
         </section>
         {/* ----------------------------------------------------------------------------- */}
         <motion.section className="w-full">
-          <motion.div className="w-[80%] mx-auto">
+          <motion.div className="w-[95%] mx-auto">
             <style>{`
                 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
             
@@ -166,10 +166,10 @@ const Home = () => {
         </motion.section>
         {/* ----------------------------------------------------------------------------- */}
         <motion.section className="w-full">
-          <SliderCompany className="w-[80%] mx-auto mt-24" />
+          <SliderCompany className="w-[95%] mx-auto mt-24" />
         </motion.section>
         {/* ----------------------------------------------------------------------------- */}
-          <div className="w-[80%] mx-auto py-20">
+          <div className="w-[95%] mx-auto py-20">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -234,7 +234,7 @@ const Home = () => {
             </div>
           </div>
         {/* ----------------------------------------------------------------------------- */}
-          <div className="w-[80%] mx-auto py-20">
+          <div className="w-[95%] mx-auto py-20">
             <div className="flex flex-col md:flex-row gap-12 items-center">
               <div className="w-full md:w-1/2">
                 <motion.div 

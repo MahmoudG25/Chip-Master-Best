@@ -13,18 +13,19 @@ import BottomNav from "./components/BottomNav";
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/serves" element={<Serves />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/order" element={<Order />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="*" element={<Error404 />} />
-        <Route path="/privacy" element={<PrivacyPolicy />} />
-        <Route path="/auth/login" element={<Login />} />
-        <Route path="/auth/register" element={<Register />} />
-      </Routes>
-      <BottomNav />
+      <div className="min-h-screen">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/serves" element={<Serves />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/order" element={<Order />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<Error404 />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/auth/login" element={<Login />} />
+          <Route path="/auth/register" element={<Register />} />
+        </Routes>
+      </div>
     </Router>
   );
 }

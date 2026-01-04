@@ -22,69 +22,44 @@ const SliderCompany = () => {
   ];
 
   return (
-    <>
-      {/* Mobile View: Grid Layout */}
-      <div className="md:hidden w-[90%] mx-auto mt-14 mb-14">
-        <div className="grid grid-cols-3 gap-8 items-center justify-items-center">
-            {brands.map((brand, index) => (
-            <img
+    <div className="w-full relative select-none overflow-hidden my-14">
+      <style>{`
+        .marquee-track {
+          display: flex;
+          width: max-content;
+          animation: marquee 20s linear infinite; /* Slower for mobile readability */
+        }
+        
+        .marquee-container:hover .marquee-track {
+          animation-play-state: paused;
+        }
+
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+      `}</style>
+
+      <div className="w-[95%] md:w-[80%] mx-auto relative marquee-container">
+          {/* fade left */}
+          <div className="pointer-events-none absolute left-0 top-0 h-full w-16 md:w-24 bg-gradient-to-r from-white dark:from-slate-900 to-transparent z-10" />
+
+          <div className="marquee-track gap-8 md:gap-16 items-center">
+            {[...brands, ...brands, ...brands].map((brand, index) => ( // Tripled for smoother loop on wide screens
+              <img
                 key={index}
                 src={brand.logo}
                 alt={brand.name}
-                className="h-8 w-auto opacity-80 hover:opacity-100 transition-opacity duration-300"
+                className="h-10 md:h-12 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity duration-300 dark:invert"
                 draggable={false}
-            />
+              />
             ))}
-        </div>
+          </div>
+
+          {/* fade right */}
+          <div className="pointer-events-none absolute right-0 top-0 h-full w-16 md:w-24 bg-gradient-to-l from-white dark:from-slate-900 to-transparent z-10" />
       </div>
-
-      {/* Desktop View: Marquee Layout */}
-      <div className="hidden md:block marquee w-[80%] mx-auto mt-14 mb-14 relative select-none">
-        <style>{`
-          .marquee {
-            overflow: hidden;
-            white-space: nowrap;
-          }
-
-          .marquee-track {
-            display: flex;
-            width: max-content;
-            animation: marquee 12s linear infinite;
-          }
-
-          .marquee:hover .marquee-track {
-            animation-play-state: paused;
-          }
-
-          @keyframes marquee {
-            0% {
-              transform: translateX(0);
-            }
-            100% {
-              transform: translateX(-50%);
-            }
-          }
-        `}</style>
-
-        {/* fade left */}
-        <div className="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-white dark:from-slate-900 to-transparent z-10" />
-
-        <div className="marquee-track gap-16 items-center">
-          {[...brands, ...brands].map((brand, index) => (
-            <img
-              key={index}
-              src={brand.logo}
-              alt={brand.name}
-              className="h-12 w-auto opacity-80 hover:opacity-100 transition-opacity duration-300 contrast-0 grayscale dark:invert"
-              draggable={false}
-            />
-          ))}
-        </div>
-
-        {/* fade right */}
-        <div className="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-white dark:from-slate-900 to-transparent z-10" />
-      </div>
-    </>
+    </div>
   );
 };
 

@@ -4,7 +4,7 @@ const Footer = () => {
     return (
       <>
         <footer className="w-full bg-gray-50 dark:bg-slate-800 transition-colors">
-          <div className="w-[80%] mx-auto px-6 pt-16 md:px-16 text-gray-900 dark:text-gray-100">
+          <div className="w-[95%] mx-auto px-5 pt-16 md:px-16 text-gray-900 dark:text-gray-100">
             <div className="flex flex-col md:flex-row justify-between w-full gap-10 border-b border-gray-500 dark:border-gray-600 pb-10">
                 <div className="md:max-w-96">
                     <h2 className='text-2xl font-bold text-indigo-600 flex items-center gap-2'>
@@ -19,7 +19,7 @@ const Footer = () => {
                         <img src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/refs/heads/main/assets/appDownload/appleStoreBtnBlack.svg" alt="app store" className="h-10 w-auto border border-white rounded" />
                     </div>
                 </div>
-                <div className="flex-1 flex items-start md:justify-end gap-20 md:gap-40">
+                <div className="flex-1 flex items-start md:justify-end gap-10 md:gap-40">
                     <div>
                         <h2 className="font-semibold mb-5">Company</h2>
                         <ul className="text-sm space-y-2">
@@ -33,7 +33,7 @@ const Footer = () => {
                         <h2 className="font-semibold mb-5">Get in touch</h2>
                         <div className="text-sm space-y-2">
                             <p>+1 (555) 123-4567</p>
-                            <p>support@motherboardstore.com</p>
+                            <p>support@phoneparts.com</p>
                             <p>123 Tech Park, Silicon Valley</p>
                         </div>
                     </div>
