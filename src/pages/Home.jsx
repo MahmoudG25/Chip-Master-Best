@@ -9,7 +9,7 @@ import SliderCompany from "../components/SliderCompany";
 
 const Home = () => {
     return (
-      <motion.div className="bg-white">
+      <motion.div className="bg-white dark:bg-slate-900 transition-colors">
       <Navbar />
       <motion.main className="w-full relative overflow-hidden min-h-[calc(100vh-100px)] w-full">
         {/* Decorative Background Elements */}
@@ -29,7 +29,7 @@ const Home = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="flex items-center gap-3 bg-white/80 backdrop-blur-sm border border-indigo-100 p-1.5 pr-4 rounded-full shadow-sm hover:shadow-md transition-all cursor-default mb-8"
+              className="flex items-center gap-3 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-indigo-100 dark:border-indigo-900/30 p-1.5 pr-4 rounded-full shadow-sm hover:shadow-md transition-all cursor-default mb-8"
             >
               <div className="flex -space-x-2">
                 {[
@@ -45,7 +45,7 @@ const Home = () => {
                   />
                 ))}
               </div>
-              <p className="text-xs font-medium text-slate-600">
+              <p className="text-xs font-medium text-slate-600 dark:text-slate-300">
                 Trusted by <span className="text-indigo-600 font-bold">5k+</span> repair shops
               </p>
             </motion.div>
@@ -55,7 +55,7 @@ const Home = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-center md:text-left text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 leading-[1.1] mb-6"
+              className="text-center md:text-left text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-6"
             >
               Genuine Mobile <br className="hidden md:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600">
@@ -68,7 +68,7 @@ const Home = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-center md:text-left text-lg text-slate-600 max-w-lg mb-10 leading-relaxed"
+              className="text-center md:text-left text-lg text-slate-600 dark:text-slate-300 max-w-lg mb-10 leading-relaxed"
             >
               Your trusted source for original, testing, and unlocked mobile logic boards. 
               We sell high-quality parts and provide expert diagnostic services.
@@ -86,7 +86,7 @@ const Home = () => {
                 <Button>Get Started</Button>
               </Link>
 
-              <button className="flex items-center gap-2 px-6 py-3 rounded-full text-slate-700 font-medium hover:text-indigo-600 hover:bg-indigo-50 transition-all active:scale-95 group">
+              <button className="flex items-center gap-2 px-6 py-3 rounded-full text-slate-700 dark:text-slate-200 font-medium hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-all active:scale-95 group">
                 <div className="relative flex items-center justify-center size-8 bg-indigo-100 text-indigo-600 rounded-full group-hover:scale-110 transition-transform">
                     <svg className="w-4 h-4 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M8 5v14l11-7z" />
@@ -111,21 +111,21 @@ const Home = () => {
                 <img
                     src="https://images.pexels.com/photos/6755093/pexels-photo-6755093.jpeg"
                     alt="Hero Visual"
-                    className="relative w-full rounded-3xl shadow-2xl shadow-indigo-200 rotate-2 hover:rotate-0 transition-all duration-500 ease-out border-4 border-white"
+                    className="relative w-full rounded-3xl shadow-2xl shadow-indigo-200 dark:shadow-indigo-900/30 rotate-2 hover:rotate-0 transition-all duration-500 ease-out border-4 border-white dark:border-slate-700"
                 />
                 
                 {/* Floating Cards */}
                 <motion.div 
                     animate={{ y: [0, -10, 0] }}
                     transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute -bottom-8 -left-8 bg-white p-4 rounded-xl shadow-xl border border-gray-100 flex items-center gap-3"
+                    className="absolute -bottom-8 -left-8 bg-white dark:bg-slate-800 p-4 rounded-xl shadow-xl border border-gray-100 dark:border-gray-700 flex items-center gap-3"
                 >
                     <div className="size-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
                     <div>
                         <p className="text-xs text-gray-400 font-medium">Quality Check</p>
-                        <p className="text-sm font-bold text-gray-800">100% Tested</p>
+                        <p className="text-sm font-bold text-gray-800 dark:text-gray-100">100% Tested</p>
                     </div>
                 </motion.div>
             </div>
@@ -141,7 +141,7 @@ const Home = () => {
                     font-family: 'Poppins', sans-serif;
                 }
             `}</style>
-            <motion.h1 className="text-3xl font-semibold text-center mx-auto">Our Services</motion.h1>
+            <motion.h1 className="text-3xl font-semibold text-center mx-auto text-slate-900 dark:text-white">Our Services</motion.h1>
             <motion.p className="text-sm text-slate-500 text-center mt-2 max-w-lg mx-auto">
                 We provide comprehensive solutions for mobile phone repairs and parts.
             </motion.p>
@@ -177,8 +177,8 @@ const Home = () => {
               viewport={{ once: true }}
               className="text-center mb-16"
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">How It Works</h2>
-              <p className="text-slate-600 max-w-2xl mx-auto">Getting your device back to life is easier than ever with our streamlined process.</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">How It Works</h2>
+              <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">Getting your device back to life is easier than ever with our streamlined process.</p>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -220,16 +220,16 @@ const Home = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.2 }}
-                  className="bg-slate-50 p-8 rounded-2xl border border-slate-100 relative overflow-hidden group hover:shadow-lg transition-all duration-300"
+                  className="bg-slate-50 dark:bg-slate-800 p-8 rounded-2xl border border-slate-100 dark:border-slate-700 relative overflow-hidden group hover:shadow-lg transition-all duration-300"
                 >
                   <div className="absolute top-0 right-0 p-4 opacity-10 font-bold text-6xl text-slate-900 select-none">
                     {item.step}
                   </div>
-                  <div className="size-12 rounded-xl bg-white shadow-sm border border-slate-100 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <div className="size-12 rounded-xl bg-white dark:bg-slate-700 shadow-sm border border-slate-100 dark:border-slate-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                     {item.icon}
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-3">{item.title}</h3>
-                  <p className="text-slate-600 leading-relaxed text-sm">{item.description}</p>
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{item.title}</h3>
+                  <p className="text-slate-600 dark:text-slate-300 leading-relaxed text-sm">{item.description}</p>
                 </motion.div>
               ))}
             </div>
@@ -244,12 +244,12 @@ const Home = () => {
                   viewport={{ once: true }}
                 >
                   <span className="text-indigo-600 font-bold tracking-wider text-sm uppercase">Testimonials</span>
-                  <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mt-2 mb-6">Trusted by Repair Experts</h2>
-                  <div className="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 relative">
+                  <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mt-2 mb-6">Trusted by Repair Experts</h2>
+                  <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-700 relative">
                     <svg className="absolute -top-4 -left-4 w-10 h-10 text-indigo-500" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM5.01691 21L5.01691 18C5.01691 16.8954 5.91234 16 7.01691 16H10.0169C10.5692 16 11.0169 15.5523 11.0169 15V9C11.0169 8.44772 10.5692 8 10.0169 8H6.01691C5.46462 8 5.01691 8.44772 5.01691 9V11C5.01691 11.5523 4.56919 12 4.01691 12H3.01691V5H13.0169V15C13.0169 18.3137 10.3306 21 7.01691 21H5.01691Z" />
                     </svg>
-                    <p className="text-slate-600 italic mb-6 relative z-10 pt-4">
+                    <p className="text-slate-600 dark:text-slate-300 italic mb-6 relative z-10 pt-4">
                       "I've sourced over 50 iPhone logic boards from PhonePartsMaster for my repair shop. Every single one was genuine and worked perfectly. Their QC is unmatched in this industry."
                     </p>
                     <div className="flex items-center gap-4">
@@ -259,7 +259,7 @@ const Home = () => {
                         className="size-12 rounded-full object-cover"
                       />
                       <div>
-                        <h4 className="font-bold text-slate-900">Mahmoud Gado</h4>
+                        <h4 className="font-bold text-slate-900 dark:text-white">Mahmoud Gado</h4>
                         <p className="text-xs text-slate-500">Owner, iFixItFast Repairs</p>
                       </div>
                     </div>

@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 const Footer = () => {
     return (
       <>
-        <footer className="w-full bg-gray-50">
-          <div className="w-[80%] mx-auto px-6 pt-16 md:px-16 text-gray-900 ">
-            <div className="flex flex-col md:flex-row justify-between w-full gap-10 border-b border-gray-500 pb-10">
+        <footer className="w-full bg-gray-50 dark:bg-slate-800 transition-colors">
+          <div className="w-[80%] mx-auto px-6 pt-16 md:px-16 text-gray-900 dark:text-gray-100">
+            <div className="flex flex-col md:flex-row justify-between w-full gap-10 border-b border-gray-500 dark:border-gray-600 pb-10">
                 <div className="md:max-w-96">
                     <h2 className='text-2xl font-bold text-indigo-600 flex items-center gap-2'>
                         {/* <img alt="" className="h-8" src="..." /> */}
@@ -23,7 +23,7 @@ const Footer = () => {
                     <div>
                         <h2 className="font-semibold mb-5">Company</h2>
                         <ul className="text-sm space-y-2">
-                            <li className="hover:text-indigo-600 transition"><Link to="/">Home</Link></li>
+                            <li className="hover:text-indigo-600 dark:hover:text-indigo-400 transition"><Link to="/">Home</Link></li>
                             <li className="hover:text-indigo-600 transition"><Link to="/about">About us</Link></li>
                             <li className="hover:text-indigo-600 transition"><Link to="/services">Services</Link></li>
                             <li className="hover:text-indigo-600 transition"><Link to="/contact">Contact us</Link></li>

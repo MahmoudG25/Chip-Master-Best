@@ -6,21 +6,21 @@ const PrivacyPolicy = () => {
     <>
       <Navbar />
 
-      <main className="w-full min-h-screen">
+      <main className="w-full min-h-screen bg-white dark:bg-slate-900 transition-colors">
         <div className="w-[80%] mx-auto px-6 py-12">
           {/* Header */}
           <div className="mb-12">
-            <h1 className="text-4xl font-bold text-gray-900 mb-3">
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-3">
               Privacy Policy
             </h1>
-            <p className="text-gray-500 text-sm">
+            <p className="text-gray-500 dark:text-gray-400 text-sm">
               Last updated: January 2026
             </p>
           </div>
 
-          <div className="space-y-10 text-gray-700 leading-relaxed md:max-w-4xl">
+          <div className="space-y-10 text-gray-700 dark:text-gray-300 leading-relaxed md:max-w-4xl">
             <section>
-              <h2 className="text-xl font-semibold text-gray-900 mb-3">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
                 1. Introduction
               </h2>
               <p>

@@ -21,10 +21,10 @@ export const ScannerModule = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[200] bg-slate-950 flex flex-col overflow-hidden"
+          className="fixed inset-0 z-[200] bg-slate-950 dark:bg-black flex flex-col overflow-hidden transition-colors"
         >
           {/* Header */}
-          <div className="absolute top-0 inset-x-0 p-6 flex justify-between items-center z-50 bg-gradient-to-b from-slate-950/80 to-transparent">
+          <div className="absolute top-0 inset-x-0 p-6 flex justify-between items-center z-50 bg-gradient-to-b from-slate-950/80 dark:from-black/80 to-transparent">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-indigo-600/20 flex items-center justify-center border border-indigo-600/30">
                 <Target size={18} className="text-indigo-600 animate-pulse" />
@@ -37,7 +37,7 @@ export const ScannerModule = ({
               variant="ghost" 
               size="sm" 
               onClick={onClose} 
-              className="bg-white/10 hover:bg-white/20 text-white rounded-full w-10 h-10 p-0"
+              className="bg-white/10 hover:bg-white/20 dark:bg-white/5 dark:hover:bg-white/15 text-white rounded-full w-10 h-10 p-0 transition-colors"
             >
               <X size={20} />
             </Button>
@@ -71,7 +71,7 @@ export const ScannerModule = ({
               </div>
               
               <div className="mt-12 text-center">
-                <p className="text-white font-mono text-xs bg-slate-900/60 backdrop-blur-md px-6 py-2.5 rounded-full border border-white/5 uppercase tracking-widest leading-relaxed">
+                <p className="text-white font-mono text-xs bg-slate-900/60 dark:bg-black/60 backdrop-blur-md px-6 py-2.5 rounded-full border border-white/5 uppercase tracking-widest leading-relaxed">
                   {isProcessing 
                     ? (lang === 'ar' ? 'جاري تحليل البيانات...' : 'ANALYZING DATA...') 
                     : (lang === 'ar' ? 'وجه الكاميرا نحو كود الرقاقة' : 'ALIGN CAMERA WITH CHIP CODE')}
@@ -81,7 +81,7 @@ export const ScannerModule = ({
           </div>
 
           {/* Controls */}
-          <div className="h-40 bg-slate-950 border-t border-white/5 flex flex-col items-center justify-center p-6 bg-gradient-to-t from-slate-900 to-slate-950">
+          <div className="h-40 bg-slate-950 dark:bg-black border-t border-white/5 flex flex-col items-center justify-center p-6 bg-gradient-to-t from-slate-900 dark:from-black to-slate-950 dark:to-black">
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={onCapture}

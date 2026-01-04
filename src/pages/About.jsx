@@ -15,13 +15,13 @@ const About = () => {
                 }
             `}</style>
             <Navbar />
-            <section className="w-full h-[calc(100vh-100px)] flex items-center justify-center ">
+            <section className="w-full h-[calc(100vh-100px)] flex items-center justify-center bg-white dark:bg-slate-900 transition-colors">
               <div className="flex flex-col md:flex-row items-center justify-center gap-10 max-md:px-4">
-                <div className="relative shadow-2xl shadow-indigo-600/40 rounded-2xl overflow-hidden shrink-0">
+                <div className="relative shadow-2xl shadow-indigo-600/40 dark:shadow-indigo-900/50 rounded-2xl overflow-hidden shrink-0">
                     <img className="max-w-md w-full object-cover rounded-2xl"
                         src="https://images.unsplash.com/photo-1531497865144-0464ef8fb9a9?q=80&w=451&h=451&auto=format&fit=crop"
                         alt="" />
-                    <div className="flex items-center gap-1 max-w-72 absolute bottom-8 left-8 bg-white p-4 rounded-xl">
+                    <div className="flex items-center gap-1 max-w-72 absolute bottom-8 left-8 bg-white dark:bg-slate-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700">
                         <div className="flex -space-x-4 shrink-0">
                             <img src={mahmoud} alt="image"
                                 className="size-9 rounded-full border-[3px] border-white hover:-translate-y-1 transition z-1" />
@@ -35,15 +35,15 @@ const About = () => {
                                 50+
                             </div>
                         </div>
-                        <p className="text-sm font-medium text-slate-800">Trusted by technicians</p>
+                        <p className="text-sm font-medium text-slate-800 dark:text-slate-100">Trusted by technicians</p>
                     </div>
                 </div>
                 <div className="text-sm text-slate-600 max-w-lg">
-                    <h1 className="text-xl uppercase font-semibold text-slate-700">What we do?</h1>
+                    <h1 className="text-xl uppercase font-semibold text-slate-700 dark:text-slate-200">What we do?</h1>
                     <div className="w-24 h-[3px] rounded-full bg-gradient-to-r from-indigo-600 to-[#DDD9FF]"></div>
-                    <p className="mt-8">We specialize in providing high-quality, original mobile phone motherboards. From iPhone to Samsung, we stock tested and unlocked logic boards ready for installation.</p>
-                    <p className="mt-4">Our team of expert technicians rigorously tests every board to ensure 100% functionality. We also offer advanced diagnostic services to help identified complex hardware issues.</p>
-                    <p className="mt-4">Whether you are a repair shop owner or a DIY enthusiast, we provide the reliable parts and support you need to get devices running like new again.</p>
+                    <p className="mt-8 text-slate-600 dark:text-slate-300">We specialize in providing high-quality, original mobile phone motherboards. From iPhone to Samsung, we stock tested and unlocked logic boards ready for installation.</p>
+                    <p className="mt-4 text-slate-600 dark:text-slate-300">Our team of expert technicians rigorously tests every board to ensure 100% functionality. We also offer advanced diagnostic services to help identified complex hardware issues.</p>
+                    <p className="mt-4 text-slate-600 dark:text-slate-300">Whether you are a repair shop owner or a DIY enthusiast, we provide the reliable parts and support you need to get devices running like new again.</p>
                     <Link to="/contact" className="flex items-center w-max gap-2 mt-8 hover:-translate-y-0.5 transition bg-gradient-to-r from-indigo-600 to-[#8A7DFF] py-3 px-8 rounded-full text-white">
                         <span>Get in touch</span>
                         <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">

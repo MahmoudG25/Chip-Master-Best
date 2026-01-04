@@ -62,7 +62,7 @@ const Serves = () => {
   ];
 
   return (
-    <div className="bg-white dark:bg-white min-h-screen flex flex-col">
+    <div className="bg-white dark:bg-slate-900 min-h-screen flex flex-col transition-colors">
       <Navbar />
       
       <main className="flex-grow w-full py-12 relative">
@@ -90,20 +90,20 @@ const Serves = () => {
             ) : (
                 <>
                 {/* Main Action Card */}
-                <Card padding="none" className="group cursor-pointer border-0 shadow-2xl shadow-indigo-100 hover:shadow-indigo-200 transition-all duration-500 bg-white dark:bg-white dark:border-indigo-100">
+                <Card padding="none" className="group cursor-pointer border-0 shadow-2xl shadow-indigo-100 dark:shadow-indigo-900/30 hover:shadow-indigo-200 dark:hover:shadow-indigo-900/50 transition-all duration-500 bg-white dark:bg-slate-800">
                     <button 
                     onClick={startCamera}
                     className="w-full relative overflow-hidden p-10 flex flex-col items-center gap-6"
                     >
-                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 to-purple-50 opacity-50 group-hover:opacity-100 transition-opacity" />
-                    <div className="relative w-20 h-20 bg-white dark:bg-white rounded-2xl flex items-center justify-center border border-indigo-100 dark:border-indigo-100 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-xl shadow-indigo-100">
+                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 opacity-50 group-hover:opacity-100 transition-opacity" />
+                    <div className="relative w-20 h-20 bg-white dark:bg-slate-700 rounded-2xl flex items-center justify-center border border-indigo-100 dark:border-indigo-800 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-xl shadow-indigo-100 dark:shadow-indigo-900/50">
                         <Camera size={32} className="text-indigo-600" />
                     </div>
                     <div className="text-center relative">
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-900 mb-2">
+                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
                         {lang === 'ar' ? 'المسح الذكي' : 'Smart Scan'}
                         </h2>
-                        <p className="text-slate-500 dark:text-slate-500 text-sm max-w-[200px]">
+                        <p className="text-slate-500 dark:text-slate-400 text-sm max-w-[200px]">
                         {lang === 'ar' ? 'استخدم الكاميرا لتحليل الرقاقة' : 'Analyze chip via camera'}
                         </p>
                     </div>
@@ -119,7 +119,7 @@ const Serves = () => {
                     ]}
                     activeTab={searchTab === 'neural' ? 'google' : searchTab} 
                     onChange={(id) => setSearchTab(id === 'google' ? 'neural' : id)} 
-                    className="bg-white dark:bg-white backdrop-blur-sm border-white dark:border-white cursor-pointer"
+                    className="bg-white dark:bg-slate-800 backdrop-blur-sm border-white dark:border-slate-700 cursor-pointer"
                     />
 
                     <div className="relative">
@@ -127,7 +127,7 @@ const Serves = () => {
                         value={inputCode}
                         onChange={e => setInputCode(e.target.value.toUpperCase())}
                         placeholder={searchTab === 'local' ? (lang === 'ar' ? "ابحث في القاعدة..." : "Search local database...") : (lang === 'ar' ? "ابحث في جوجل..." : "Search on Google...")}
-                        className="py-5 cursor-pointer text-xl font-mono text-center rounded-[1.5rem] bg-indigo-50/50 dark:bg-indigo-50/50 border-indigo-100 dark:border-indigo-100 text-slate-800 dark:text-slate-800 placeholder:text-slate-400 dark:placeholder:text-slate-400 focus:bg-white dark:focus:bg-white focus:ring-4 focus:ring-indigo-500/10 transition-all shadow-sm"
+                        className="py-5 cursor-pointer text-xl font-mono text-center rounded-[1.5rem] bg-indigo-50/50 dark:bg-slate-800/50 border-indigo-100 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:bg-white dark:focus:bg-slate-700 focus:ring-4 focus:ring-indigo-500/10 transition-all shadow-sm"
                         icon={Search}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
@@ -140,16 +140,16 @@ const Serves = () => {
                     
                     {/* Autocomplete Results for Local DB */}
                     {matches.length > 0 && searchTab === 'local' && (
-                        <Card padding="none" className="mt-4 z-50 shadow-2xl bg-white dark:bg-white border border-gray-400 dark:border-gray-400 overflow-hidden max-h-96 overflow-y-auto custom-scrollbar rounded-[1rem] ">
+                        <Card padding="none" className="mt-4 z-50 shadow-2xl bg-white dark:bg-slate-800 border border-gray-400 dark:border-gray-600 overflow-hidden max-h-96 overflow-y-auto custom-scrollbar rounded-[1rem]">
                         {matches.map((m, idx) => (
                             <button 
                             key={idx} 
                             onClick={() => selectMatch(m)}
-                            className="w-full p-5 flex justify-between cursor-pointer items-center hover:bg-slate-100 dark:hover:bg-slate-100 border-b border-slate-50 dark:border-slate-50 last:border-0 transition-all text-start"
+                            className="w-full p-5 flex justify-between cursor-pointer items-center hover:bg-slate-100 dark:hover:bg-slate-700 border-b border-slate-50 dark:border-slate-700 last:border-0 transition-all text-start"
                             >
                             <div>
                                 <div className="text-[10px] text-indigo-600 font-mono mb-1 font-black">{m.code}</div>
-                                <div className="text-sm font-bold text-slate-700 dark:text-slate-700">{m.description}</div>
+                                <div className="text-sm font-bold text-slate-700 dark:text-slate-200">{m.description}</div>
                             </div>
                             <Badge variant="neutral">{m.sizeDisplay}</Badge>
                             </button>

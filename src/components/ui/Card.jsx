@@ -11,7 +11,7 @@ export const Card = ({ children, className, padding = 'lg' }) => {
 
   return (
     <div className={twMerge(
-      'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none overflow-hidden',
+      'bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-slate-900/50 overflow-hidden transition-colors',
       paddings[padding],
       className
     )}>

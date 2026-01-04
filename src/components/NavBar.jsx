@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { Sun, Moon } from 'lucide-react';
 import Button from './Button';
 import { CiLogin } from "react-icons/ci";
+import { useTheme } from '../contexts/ThemeContext';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { theme, toggleTheme } = useTheme();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -21,7 +24,7 @@ const Navbar = () => {
 
   return (
     <nav className="w-full">
-      <div className="w-[80%] mx-auto flex items-center justify-between px-6 py-3 md:py-4 shadow rounded-full bg-white relative">
+      <div className="w-[80%] mx-auto flex items-center justify-between px-6 py-3 md:py-4 shadow rounded-full bg-white dark:bg-slate-800 relative transition-colors">
       {/* Logo */}
       <Link to="/" onClick={closeMenu}>
         <img 
@@ -34,15 +37,15 @@ const Navbar = () => {
       <nav 
         className={`
           max-md:absolute max-md:top-0 max-md:left-0 max-md:overflow-hidden 
-          items-center justify-center max-md:h-screen transition-[width] duration-300 bg-white/95 backdrop-blur 
-          flex-col md:flex-row flex gap-8 text-gray-900 text-sm font-normal z-50
+          items-center justify-center max-md:h-screen transition-[width] duration-300 bg-white/95 dark:bg-slate-800/95 backdrop-blur 
+          flex-col md:flex-row flex gap-8 text-gray-900 dark:text-gray-100 text-sm font-normal z-50
           ${isOpen ? 'max-md:w-full' : 'max-md:w-0'}
         `}
       >
         <Link 
           to="/" 
           onClick={closeMenu}
-          className={`hover:text-indigo-600 transition ${isActive('/') ? 'text-indigo-600 font-semibold' : ''}`}
+          className={`hover:text-indigo-600 dark:hover:text-indigo-400 transition ${isActive('/') ? 'text-indigo-600 dark:text-indigo-400 font-semibold' : ''}`}
         >
           Home
         </Link>
@@ -78,7 +81,7 @@ const Navbar = () => {
         {/* Close Button (Mobile only) */}
         <button 
           onClick={toggleMenu}
-          className="md:hidden text-gray-600 absolute top-6 right-6"
+          className="md:hidden text-gray-600 dark:text-gray-400 absolute top-6 right-6 hover:text-gray-900 dark:hover:text-gray-100 transition"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -88,19 +91,22 @@ const Navbar = () => {
 
       {/* Action Buttons */}
       <div className="flex items-center space-x-4">
-        {/* Theme/Settings Button */}
-        <button className="size-8 flex items-center justify-center hover:bg-gray-100 transition border border-slate-300 rounded-md">
-          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path 
-              d="M7.5 10.39a2.889 2.889 0 1 0 0-5.779 2.889 2.889 0 0 0 0 5.778M7.5 1v.722m0 11.556V14M1 7.5h.722m11.556 0h.723m-1.904-4.596-.511.51m-8.172 8.171-.51.511m-.001-9.192.51.51m8.173 8.171.51.511"
-              stroke="#353535" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" 
-            />
-          </svg>
+        {/* Theme Toggle Button */}
+        <button 
+          onClick={toggleTheme}
+          className="size-8 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-slate-700 transition border border-slate-300 dark:border-slate-600 rounded-md"
+          aria-label="Toggle theme"
+        >
+          {theme === 'light' ? (
+            <Moon size={15} className="text-slate-700 dark:text-slate-300" />
+          ) : (
+            <Sun size={15} className="text-slate-300" />
+          )}
         </button>
         <Link 
           to="/auth/login" 
           onClick={closeMenu}
-          className="hidden md:flex items-center gap-2 hover:text-indigo-600 transition ${isActive('/auth/login') ? 'text-indigo-600 font-semibold' : ''}"
+          className={`hidden md:flex items-center gap-2 hover:text-indigo-600 dark:hover:text-indigo-400 transition ${isActive('/auth/login') ? 'text-indigo-600 dark:text-indigo-400 font-semibold' : ''}`}
         >
           <CiLogin /> Login
         </Link>
@@ -108,7 +114,7 @@ const Navbar = () => {
         <Link 
           to="/auth/register" 
           onClick={closeMenu}
-          className="hidden md:flex items-center gap-2 hover:text-indigo-600 transition ${isActive('/auth/register') ? 'text-indigo-600 font-semibold' : ''}"
+          className={`hidden md:flex items-center gap-2 hover:text-indigo-600 dark:hover:text-indigo-400 transition ${isActive('/auth/register') ? 'text-indigo-600 dark:text-indigo-400 font-semibold' : ''}`}
         >
             <Button gradientColor="#22C55E">Sign up</Button>
         </Link>
@@ -116,7 +122,7 @@ const Navbar = () => {
         {/* Open Menu Button (Mobile only) */}
         <button 
           onClick={toggleMenu}
-          className="md:hidden text-gray-600"
+          className="md:hidden text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
