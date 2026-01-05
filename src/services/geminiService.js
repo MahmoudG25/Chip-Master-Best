@@ -4,28 +4,24 @@ import { performOCRWithOpenAI, isOpenAIAvailable } from './openaiService';
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 let genAI = null;
-// TEMPORARILY DISABLED - Using OpenAI only
-/*
+
 try {
   if (API_KEY) {
     genAI = new GoogleGenerativeAI(API_KEY);
   } else {
-    console.warn("AI API Key is missing. Using placeholder mode.");
+    console.warn("AI API Key is missing. Please check VITE_GEMINI_API_KEY in .env");
   }
 } catch (e) {
   console.error("AI Init Failed", e);
 }
-*/
-console.warn("⚠️ Gemini is temporarily disabled. Using OpenAI for all requests.");
 
 export const performOCR = async (base64Image) => {
-  // TEMPORARILY DISABLED - Skip Gemini, use OpenAI directly
   if (!genAI) {
-    console.warn("Gemini not available, using OpenAI directly...");
+    console.warn("Gemini instance not found, attempting fallback to OpenAI...");
     if (isOpenAIAvailable()) {
       return await performOCRWithOpenAI(base64Image);
     } else {
-      throw new Error("Both Gemini and OpenAI are unavailable. Please add VITE_OPENAI_API_KEY to .env");
+      throw new Error("AI Service Unavailable. Please configure VITE_GEMINI_API_KEY or VITE_OPENAI_API_KEY.");
     }
   }
 
@@ -51,9 +47,9 @@ export const performOCR = async (base64Image) => {
   } catch (e) {
     console.error("Gemini OCR Error:", e);
     
-    // Fallback to OpenAI if Gemini quota exceeded (429 error)
-    if (e.message?.includes('429') || e.message?.includes('quota')) {
-      console.warn("Gemini quota exceeded, falling back to OpenAI...");
+    // Fallback to OpenAI if Gemini quota exceeded (429), Key Invalid (403), or Model Not Found (404)
+    if (e.message?.includes('429') || e.message?.includes('quota') || e.message?.includes('403') || e.message?.includes('permission') || e.message?.includes('404') || e.message?.includes('not found')) {
+      console.warn("Gemini unavailable (Quota/Auth/Model), falling back to OpenAI...");
       if (isOpenAIAvailable()) {
         try {
           return await performOCRWithOpenAI(base64Image);
@@ -74,7 +70,7 @@ export const searchChipInGoogle = async (code) => {
   if (!genAI) return null;
 
   try {
-    const modelName = "gemini-2.0-flash";
+    const modelName = "gemini-1.5-flash-latest";
     console.log("Initializing Gemini Search with model:", modelName);
     const model = genAI.getGenerativeModel({ 
       model: modelName,

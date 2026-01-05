@@ -10,9 +10,17 @@ export const ScannerModule = ({
   onCapture, 
   isProcessing,
   videoRef,
-  canvasRef
+  canvasRef,
+  stream
 }) => {
   const { lang } = useLanguage();
+
+  React.useEffect(() => {
+    if (isOpen && stream && videoRef.current) {
+        videoRef.current.srcObject = stream;
+        videoRef.current.play().catch(e => console.log("Play error:", e));
+    }
+  }, [isOpen, stream, videoRef]);
 
   return (
     <AnimatePresence>

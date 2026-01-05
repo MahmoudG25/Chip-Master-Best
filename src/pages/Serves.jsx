@@ -37,6 +37,7 @@ const Serves = () => {
     isProcessing,
     videoRef,
     canvasRef,
+    stream,
     startCamera,
     closeCamera,
     captureImage
@@ -176,31 +177,6 @@ const Serves = () => {
                 </div>
                 </>
             )}
-
-            {/* Empty State / Quick Links as Footer */}
-            {/* {!lastResult && matches.length === 0 && !inputCode && (
-                 <div className="pt-8 hidden md:grid grid-cols-3 gap-4 opacity-60 hover:opacity-100 transition-opacity">
-                    <a href={appConfig.links.website || '#'} target="_blank" className="flex flex-col items-center gap-2 group">
-                        <div className="p-3 bg-indigo-50 rounded-full text-indigo-600 group-hover:bg-indigo-100 transition-colors">
-                            <Globe size={18} />
-                        </div>
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">{lang === 'ar' ? 'الموقع' : 'Site'}</span>
-                    </a>
-                    <a href={`https://wa.me/${appConfig.links.whatsapp}`} target="_blank" className="flex flex-col items-center gap-2 group">
-                        <div className="p-3 bg-green-50 rounded-full text-green-600 group-hover:bg-green-100 transition-colors">
-                            <MessageCircle size={18} />
-                        </div>
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">{lang === 'ar' ? 'واتساب' : 'WA'}</span>
-                    </a>
-                    <a href={appConfig.links.orderLink || '#'} target="_blank" className="flex flex-col items-center gap-2 group">
-                        <div className="p-3 bg-purple-50 rounded-full text-purple-600 group-hover:bg-purple-100 transition-colors">
-                            <ShoppingCart size={18} />
-                        </div>
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">{lang === 'ar' ? 'طلب' : 'Order'}</span>
-                    </a>
-                </div>
-            )} */}
-
             {/* Global Scanner Overlay */}
             <ScannerModule 
                 isOpen={isScannerOpen}
@@ -209,6 +185,7 @@ const Serves = () => {
                 isProcessing={isProcessing}
                 videoRef={videoRef}
                 canvasRef={canvasRef}
+                stream={stream}
             />
         </div>
       </main>
