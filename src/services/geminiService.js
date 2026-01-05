@@ -26,8 +26,8 @@ export const performOCR = async (base64Image) => {
   }
 
   try {
-    // Using gemini-2.0-flash as it's multimodal and fast
-    const modelName = "gemini-2.0-flash";
+    // Using gemini-flash-latest as it was confirmed to work
+    const modelName = "gemini-flash-latest";
     console.log("Initializing Gemini Vision with model:", modelName);
     const model = genAI.getGenerativeModel({ model: modelName });
     
@@ -47,19 +47,12 @@ export const performOCR = async (base64Image) => {
   } catch (e) {
     console.error("Gemini OCR Error:", e);
     
-    // Fallback to OpenAI if Gemini quota exceeded (429), Key Invalid (403), or Model Not Found (404)
-    if (e.message?.includes('429') || e.message?.includes('quota') || e.message?.includes('403') || e.message?.includes('permission') || e.message?.includes('404') || e.message?.includes('not found')) {
-      console.warn("Gemini unavailable (Quota/Auth/Model), falling back to OpenAI...");
-      if (isOpenAIAvailable()) {
-        try {
-          return await performOCRWithOpenAI(base64Image);
-        } catch (openaiError) {
-          console.error("OpenAI fallback also failed:", openaiError);
-          throw new Error("Both Gemini and OpenAI failed. Please check your API keys and quotas.");
-        }
-      } else {
-        throw new Error("Gemini quota exceeded and OpenAI is not configured. Please add VITE_OPENAI_API_KEY to .env");
-      }
+    // Improved Error Detection
+    const errString = e.toString().toLowerCase();
+    const isRateLimit = errString.includes('429') || errString.includes('quota') || errString.includes('too many requests');
+    
+    if (isRateLimit) {
+       throw new Error("System is busy (Rate Limit). Please wait a moment.");
     }
     
     throw e;
@@ -77,16 +70,42 @@ export const searchChipInGoogle = async (code) => {
       tools: [{ googleSearch: {} }]
     });
 
+    // const prompt = `
+    //   Search for memory chip specs: "${code}".
+    //   Return valid JSON only in this format:
+    //   {
+    //     "size": "Capacity (e.g. 64GB)",
+    //     "brand": "Manufacturer",
+    //     "description": "Short summary in Arabic",
+    //     "techDetails": { "type": "DDR Type", "speed": "Speed", "devices": "Compatible phones" }
+    //   }
+    // `;
+
+
     const prompt = `
-      Search for memory chip specs: "${code}".
-      Return valid JSON only in this format:
-      {
-        "size": "Capacity (e.g. 64GB)",
-        "brand": "Manufacturer",
-        "description": "Short summary in Arabic",
-        "techDetails": { "type": "DDR Type", "speed": "Speed", "devices": "Compatible phones" }
-      }
-    `;
+You are a hardware database assistant.
+
+Given the following memory chip code:
+"${code}"
+
+Your task:
+- Identify the chip ONLY if you are confident.
+- If the code is unknown or unclear, return null values.
+- DO NOT guess or fabricate data.
+- Use Arabic for the description field only.
+
+Return STRICT JSON only in this exact format:
+{
+  "size": "string | null",
+  "brand": "string | null",
+  "description": "string | null",
+  "techDetails": {
+    "type": "string | null",
+    "speed": "string | null",
+    "devices": "string | null"
+  }
+}
+`;
 
     const result = await model.generateContent(prompt);
     const response = await result.response;

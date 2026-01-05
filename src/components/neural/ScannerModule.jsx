@@ -102,11 +102,11 @@ export const ScannerModule = ({
                 <div className="w-10 h-10 border-4 border-slate-600 border-t-indigo-600 rounded-full animate-spin" />
               ) : (
                 <div className="w-16 h-16 rounded-full border-4 border-slate-950 group-hover:scale-110 transition-transform flex items-center justify-center">
-                  <Camera size={28} className="text-slate-950 group-hover:block hidden" />
+                  <Camera size={28} className="text-slate-950 group-hover:block hidden " />
                 </div>
               )}
             </motion.button>
-            <p className="mt-4 text-[9px] font-black text-slate-500 uppercase tracking-[0.3em]">
+            <p className="mt-3 text-[9px] font-black text-slate-500 uppercase tracking-[0.3em]">
               {lang === 'ar' ? 'التحويل الرقمي AI' : 'AI DIGITAL CONVERSION'}
             </p>
           </div>

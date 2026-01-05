@@ -53,7 +53,17 @@ const Serves = () => {
         alert(lang === 'ar' ? 'لم يتم اكتشاف كود' : 'No code detected');
       }
     } catch (e) {
-      alert(e.message);
+      console.error("Capture failed:", e);
+      // Localize common errors
+      let msg = e.message;
+      if (msg.includes('Rate Limit') || msg.includes('quota') || msg.includes('429')) {
+        msg = lang === 'ar' 
+          ? 'النظام مشغول حالياً (تجاوز الحد). يرجى الانتظار قليلاً.' 
+          : 'System busy (Rate Limit). Please wait a moment.';
+      } else if (msg.includes('Camera')) {
+        msg = lang === 'ar' ? 'خطأ في الكاميرا' : 'Camera Error';
+      }
+      alert(msg);
     }
   };
 
