@@ -20,8 +20,13 @@ export const useScanner = () => {
       const constraints = {
         video: {
           facingMode: { ideal: mode },
-          width: { ideal: 4096 }, // Try for 4K
-          height: { ideal: 2160 }
+          width: { ideal: 1920 }, // 1080p is sweet spot for mobile 60fps
+          height: { ideal: 1080 },
+          frameRate: { ideal: 60 },
+          // Focus and Exposure hints
+          focusMode: { ideal: 'continuous' },
+          exposureMode: { ideal: 'continuous' },
+          whiteBalanceMode: { ideal: 'continuous' }
         },
         audio: false
       };
@@ -38,8 +43,16 @@ export const useScanner = () => {
         videoRef.current.play().catch(e => console.error("Camera play error:", e));
       }
 
-      // Check for capabilities
+      // Apply advanced constraints if supported
       const caps = track.getCapabilities();
+      const advanced = {};
+      if (caps.focusMode?.includes('continuous')) advanced.focusMode = 'continuous';
+      if (caps.exposureMode?.includes('continuous')) advanced.exposureMode = 'continuous';
+      
+      if (Object.keys(advanced).length > 0) {
+        await track.applyConstraints({ advanced: [advanced] });
+      }
+
       if (caps.zoom) {
         setZoom(settings.zoom || 1);
       }
@@ -60,9 +73,12 @@ export const useScanner = () => {
     if (!stream) return;
     const track = stream.getVideoTracks()[0];
     try {
-      await track.applyConstraints({ [key]: value });
-      if (key === 'zoom') setZoom(value);
-      if (key === 'exposureCompensation') setExposure(value);
+      const caps = track.getCapabilities();
+      if (caps[key]) {
+        await track.applyConstraints({ advanced: [{ [key]: value }] });
+        if (key === 'zoom') setZoom(value);
+        if (key === 'exposureCompensation') setExposure(value);
+      }
     } catch (e) {
       console.warn(`Failed to apply ${key}:`, e);
     }
@@ -81,6 +97,7 @@ export const useScanner = () => {
     setIsScannerOpen(false);
     setIsProcessing(false);
     setZoom(1);
+    setExposure(0);
   }, [stream]);
 
   const captureImage = useCallback(async () => {
@@ -103,7 +120,8 @@ export const useScanner = () => {
       context.imageSmoothingQuality = 'high';
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-      const dataUrl = canvas.toDataURL('image/png'); // Use PNG for lossless capture
+      // PNG is lossless, better for OCR detection of tiny characters
+      const dataUrl = canvas.toDataURL('image/png'); 
       return dataUrl;
     } catch (error) {
       console.error("Capture error:", error);
@@ -123,6 +141,7 @@ export const useScanner = () => {
       await new Promise(resolve => image.onload = resolve);
 
       const canvas = document.createElement('canvas');
+      // For mobile, we ensure the crop is calculated based on natural dimensions
       const scaleX = image.naturalWidth / image.width;
       const scaleY = image.naturalHeight / image.height;
       
@@ -132,6 +151,8 @@ export const useScanner = () => {
       const ctx = canvas.getContext('2d');
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = 'high';
+      
+      // High-precision cropping
       ctx.drawImage(
         image,
         crop.x * scaleX,
@@ -144,6 +165,7 @@ export const useScanner = () => {
         canvas.height
       );
 
+      // Convert to grayscale for Tesseract if needed, but Tesseract handles colors well
       const base64 = canvas.toDataURL('image/jpeg', 1.0).split(',')[1];
       const detectedCode = await performOCR(base64);
       
