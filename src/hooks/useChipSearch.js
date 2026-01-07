@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useDatabase } from '../contexts/DatabaseContext';
-import { searchChipInGoogle } from '../services/geminiService';
+
 
 export const useChipSearch = () => {
   const { searchAllMatches, processScan, chipDefinitions } = useDatabase();
@@ -23,35 +23,7 @@ export const useChipSearch = () => {
     }
   }, [inputCode, searchTab, searchAllMatches, chipDefinitions]);
 
-  const handleNeuralSearch = useCallback(async (code) => {
-    const codeToSearch = code || inputCode;
-    if (!codeToSearch) return;
 
-    setIsSearching(true);
-    try {
-      const info = await searchChipInGoogle(codeToSearch);
-      if (info) {
-        const result = {
-          code: codeToSearch.toUpperCase(),
-          sizeDisplay: info.size,
-          description: info.description,
-          brand: info.brand,
-          techDetails: info.techDetails,
-          source: 'AI Nexus',
-          colorHex: '#00D9FF',
-          sources: info.sources
-        };
-        setLastResult(result);
-        setSearchTab('neural');
-        return result;
-      }
-    } catch (error) {
-      console.error("Neural search error:", error);
-      throw error;
-    } finally {
-      setIsSearching(false);
-    }
-  }, [inputCode]);
 
   const selectMatch = useCallback(async (match) => {
     setLastResult(match);
@@ -78,7 +50,7 @@ export const useChipSearch = () => {
     matches,
     lastResult,
     isSearching,
-    handleNeuralSearch,
+
     selectMatch,
     resetSearch
   };

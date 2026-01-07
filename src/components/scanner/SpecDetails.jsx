@@ -14,7 +14,7 @@ export const SpecDetails = ({ result, onReset }) => {
     <Card className="animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex flex-col items-center text-center">
         <Badge variant="primary" className="mb-4">
-          {result.source || 'AI Nexus'}
+          {result.source || (lang === 'ar' ? 'نتائج القاعدة' : 'Database Results')}
         </Badge>
         
         <span className="text-[10px] font-mono text-slate-500 uppercase tracking-[0.4em] mb-2">

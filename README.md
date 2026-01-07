@@ -1,15 +1,16 @@
 # Chip Master 🚀
 
-**Chip Master** is a cutting-edge, mobile-first web application designed for electronics professionals and hobbyists. It serves as a premium marketplace for original mobile phone motherboards and a powerful AI-driven diagnostic tool.
+**Chip Master** is a cutting-edge, mobile-first web application designed for electronics professionals and hobbyists. It serves as a premium marketplace for original mobile phone motherboards and a powerful camera-based diagnostic tool.
 
-Built with performance and aesthetics in mind, Chip Master delivers a native-app-like experience directly in the browser, featuring a stunning glassmorphism UI, seamless dark mode, and advanced computer vision capabilities.
+Built with performance and aesthetics in mind, Chip Master delivers a native-app-like experience directly in the browser, featuring a stunning glassmorphism UI, seamless dark mode, and integrated text recognition (OCR) capabilities.
 
 ![Chip Master Banner](https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/banners/image-1.png)
 
 ## 🌟 Key Features
 
 *   **📱 Mobile-First Design**: Optimized touch targets, vertical layouts, and a "Chip-Master" native-feel navigation ensure a flawless experience on phone devices.
-*   **🤖 Smart AI Scanner**: Integrated with **Google Gemini 1.5 Flash**, the "Smart Scan" feature allows users to photograph motherboard components to instantly identify parts, read values, and diagnose potential faults using computer vision.
+*   **📷 Camera-Based Scanning**: Integrated with **Tesseract.js**, the scanning feature allows users to photograph motherboard components to instantly extract part codes for direct database searching.
+*   **🔍 Automated Search**: Quickly search the local database or perform a web search directly from captured text to diagnose potential faults.
 *   **🎨 Premium UI/UX**:
     *   **Glassmorphism**: Modern, translucent interface elements.
     *   **Dark Mode**: Fully supported system-wide dark theme with instant toggling.
@@ -29,8 +30,8 @@ Built with performance and aesthetics in mind, Chip Master delivers a native-app
 *   **Lucide React** (Icons)
 *   **Framer Motion** (Animations)
 
-**AI & Backend Services**
-*   ![Google Gemini](https://img.shields.io/badge/Google_Gemini-8E75B2?style=flat&logo=google&logoColor=white) **Google Generative AI** (Vision API)
+**Data & Infrastructure**
+*   **Tesseract.js** (Client-Side OCR)
 *   **Firebase** (Authentication & Database)
 
 ## 🚀 Getting Started
@@ -57,7 +58,6 @@ Follow these steps to set up the project locally.
 3.  **Environment Setup**
     Create a `.env` file in the root directory and add your API keys:
     ```env
-    VITE_GEMINI_API_KEY=your_gemini_api_key_here
     VITE_FIREBASE_API_KEY=your_firebase_api_key_here
     # Add other firebase config keys as needed
     ```
@@ -77,15 +77,17 @@ Follow these steps to set up the project locally.
 ```bash
 src/
 ├── assets/         # Static assets (images, brands, icons)
-├── components/     # Reusable UI components (NavBar, Button, SliderCompany)
-├── contexts/       # React Contexts (ThemeContext)
+├── components/     # Reusable UI components (NavBar, Button, SliderCompany, etc.)
+├── contexts/       # React Contexts (ThemeContext, DatabaseContext)
+├── hooks/          # Custom Hooks (useScanner, useChipSearch)
 ├── pages/          # Application Routes
 │   ├── Auth/       # Login & Register
 │   ├── Home.jsx    # Landing/Hero Page
-│   ├── Serves.jsx  # AI Scanner Module
+│   ├── Serves.jsx  # Tablet/Chip Scanner Module
 │   ├── About.jsx   # Company Info
 │   ├── Contact.jsx # Contact Form
 │   └── Order.jsx   # Product Catalog
+├── services/       # External services (OCR Service)
 ├── App.jsx         # Main App Layout & Routing
 └── main.jsx        # Entry Point
 ```

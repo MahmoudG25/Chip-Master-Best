@@ -13,8 +13,8 @@ import { Input } from '../components/ui/Input';
 import { Card } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
 import { Tabs } from '../components/ui/Tabs';
-import { ScannerModule } from '../components/neural/ScannerModule';
-import { SpecDetails } from '../components/neural/SpecDetails';
+import { ScannerModule } from '../components/scanner/ScannerModule';
+import { SpecDetails } from '../components/scanner/SpecDetails';
 
 const Serves = () => {
   const { lang, toggleLanguage } = useLanguage();
@@ -27,7 +27,7 @@ const Serves = () => {
     matches,
     lastResult,
     isSearching,
-    handleNeuralSearch,
+
     selectMatch,
     resetSearch
   } = useChipSearch();
@@ -40,36 +40,28 @@ const Serves = () => {
     stream,
     startCamera,
     closeCamera,
-    captureImage
+    captureImage,
+    processOCROnCrop,
+    facingMode,
+    zoom,
+    exposure,
+    resolutionInfo,
+    toggleFacingMode,
+    updateConstraint
   } = useScanner();
 
-  const handleCapture = async () => {
-    try {
-      const code = await captureImage();
-      if (code) {
-        setInputCode(code);
-        closeCamera();
-      } else {
-        alert(lang === 'ar' ? 'لم يتم اكتشاف كود' : 'No code detected');
-      }
-    } catch (e) {
-      console.error("Capture failed:", e);
-      // Localize common errors
-      let msg = e.message;
-      if (msg.includes('Rate Limit') || msg.includes('quota') || msg.includes('429')) {
-        msg = lang === 'ar' 
-          ? 'النظام مشغول حالياً (تجاوز الحد). يرجى الانتظار قليلاً.' 
-          : 'System busy (Rate Limit). Please wait a moment.';
-      } else if (msg.includes('Camera')) {
-        msg = lang === 'ar' ? 'خطأ في الكاميرا' : 'Camera Error';
-      }
-      alert(msg);
+  const handleCaptureResult = (code) => {
+    if (code) {
+      setInputCode(code);
+      closeCamera();
+    } else {
+      alert(lang === 'ar' ? 'لم يتم اكتشاف كود' : 'No code detected');
     }
   };
 
   const tabs = [
     { id: 'local', label: lang === 'ar' ? 'القاعدة المحلية' : 'Local Database' },
-    { id: 'neural', label: lang === 'ar' ? 'البحث الذكي AI' : 'Neural AI Search', icon: Globe },
+    { id: 'web', label: lang === 'ar' ? 'بحث الويب' : 'Web Search', icon: Globe },
   ];
 
   return (
@@ -103,7 +95,7 @@ const Serves = () => {
                 {/* Main Action Card */}
                 <Card padding="none" className="group cursor-pointer border-0 shadow-2xl shadow-indigo-100 dark:shadow-indigo-900/30 hover:shadow-indigo-200 dark:hover:shadow-indigo-900/50 transition-all duration-500 bg-white dark:bg-slate-800 rounded-[2rem] overflow-hidden">
                     <button 
-                    onClick={startCamera}
+                    onClick={() => startCamera()}
                     className="w-full relative overflow-hidden p-6 md:p-10 flex flex-col items-center gap-4 md:gap-6 min-h-[220px] justify-center"
                     >
                     <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 opacity-50 group-hover:opacity-100 transition-opacity" />
@@ -112,10 +104,10 @@ const Serves = () => {
                     </div>
                     <div className="text-center relative z-10">
                         <h2 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-1">
-                        {lang === 'ar' ? 'المسح الذكي' : 'Smart Scan'}
+                        {lang === 'ar' ? 'مسح الشريحة' : 'Scan Chip'}
                         </h2>
                         <p className="text-slate-500 dark:text-slate-400 text-xs md:text-sm max-w-[200px] mx-auto">
-                        {lang === 'ar' ? 'استخدم الكاميرا لتحليل الرقاقة' : 'Analyze chip via camera'}
+                        {lang === 'ar' ? 'استخدم الكاميرا لقراءة النص' : 'Scan text via camera'}
                         </p>
                     </div>
                     </button>
@@ -124,12 +116,9 @@ const Serves = () => {
                 {/* Search Area */}
                 <div className="space-y-4 pt-2 ">
                     <Tabs 
-                    tabs={[
-                        { id: 'local', label: lang === 'ar' ? 'القاعدة المحلية' : 'Local DB' },
-                        { id: 'google', label: lang === 'ar' ? 'بحث جوجل' : 'Google Search', icon: Globe },
-                    ]}
-                    activeTab={searchTab === 'neural' ? 'google' : searchTab} 
-                    onChange={(id) => setSearchTab(id === 'google' ? 'neural' : id)} 
+                    tabs={tabs}
+                    activeTab={searchTab === 'web' ? 'web' : searchTab} 
+                    onChange={(id) => setSearchTab(id)} 
                     className="bg-white dark:bg-slate-800 backdrop-blur-sm border-white dark:border-slate-700 cursor-pointer"
                     />
 
@@ -142,7 +131,7 @@ const Serves = () => {
                         icon={Search}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
-                                if (searchTab === 'neural') { // logic treats 'neural' as 'google' now
+                                if (searchTab === 'web') {
                                     window.open(`https://www.google.com/search?q=${encodeURIComponent(inputCode)}`, '_blank');
                                 }
                             }
@@ -169,7 +158,7 @@ const Serves = () => {
                     )}
 
                     {/* Google Search Trigger Button */}
-                    {searchTab === 'neural' && inputCode.length > 0 && (
+                    {searchTab === 'web' && inputCode.length > 0 && (
                         <motion.div
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -191,11 +180,20 @@ const Serves = () => {
             <ScannerModule 
                 isOpen={isScannerOpen}
                 onClose={closeCamera}
-                onCapture={handleCapture}
+                onCapture={captureImage}
+                onDetected={handleCaptureResult}
                 isProcessing={isProcessing}
                 videoRef={videoRef}
                 canvasRef={canvasRef}
                 stream={stream}
+                processOCROnCrop={processOCROnCrop}
+                // Pro Props
+                facingMode={facingMode}
+                zoom={zoom}
+                exposure={exposure}
+                resolutionInfo={resolutionInfo}
+                toggleFacingMode={toggleFacingMode}
+                updateConstraint={updateConstraint}
             />
         </div>
       </main>
