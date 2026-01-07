@@ -8,10 +8,20 @@ export const useScanner = () => {
   const [facingMode, setFacingMode] = useState('environment');
   const [zoom, setZoom] = useState(1);
   const [exposure, setExposure] = useState(0);
+  const [capabilities, setCapabilities] = useState({});
   const [resolutionInfo, setResolutionInfo] = useState({ width: 0, height: 0 });
   
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+
+  const detectCapabilities = (track) => {
+    if (track && track.getCapabilities) {
+      const caps = track.getCapabilities();
+      setCapabilities(caps);
+      return caps;
+    }
+    return {};
+  };
 
   const startCamera = useCallback(async (mode = 'environment') => {
     setIsScannerOpen(true);
@@ -38,13 +48,14 @@ export const useScanner = () => {
       const settings = track.getSettings();
       setResolutionInfo({ width: settings.width, height: settings.height });
       
+      const caps = detectCapabilities(track);
+
       if (videoRef.current) {
         videoRef.current.srcObject = mediaStream;
         videoRef.current.play().catch(e => console.error("Camera play error:", e));
       }
 
-      // Apply advanced constraints if supported
-      const caps = track.getCapabilities();
+      // Pro features: Auto-focus and Auto-exposure
       const advanced = {};
       if (caps.focusMode?.includes('continuous')) advanced.focusMode = 'continuous';
       if (caps.exposureMode?.includes('continuous')) advanced.exposureMode = 'continuous';
@@ -98,7 +109,32 @@ export const useScanner = () => {
     setIsProcessing(false);
     setZoom(1);
     setExposure(0);
+    setCapabilities({});
   }, [stream]);
+
+  // Advanced Image Pre-processing for OCR
+  const preprocessCanvas = (canvas) => {
+    const ctx = canvas.getContext('2d');
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+
+    for (let i = 0; i < data.length; i += 4) {
+      // 1. Grayscale (Luminance method)
+      const gray = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+      
+      // 2. Contrast Enhancement (Simplified: mid-tone expansion)
+      let adjusted = (gray - 128) * 1.5 + 128;
+      
+      // 3. Simple Thresholding (Bitonal: Black or White)
+      const threshold = 140; 
+      const binarized = adjusted > threshold ? 255 : 0;
+      
+      data[i] = binarized;
+      data[i + 1] = binarized;
+      data[i + 2] = binarized;
+    }
+    ctx.putImageData(imageData, 0, 0);
+  };
 
   const captureImage = useCallback(async () => {
     if (!videoRef.current || !canvasRef.current || isProcessing) return null;
@@ -165,7 +201,9 @@ export const useScanner = () => {
         canvas.height
       );
 
-      // Convert to grayscale for Tesseract if needed, but Tesseract handles colors well
+      // MANDATORY Pre-processing for Precision
+      preprocessCanvas(canvas);
+
       const base64 = canvas.toDataURL('image/jpeg', 1.0).split(',')[1];
       const detectedCode = await performOCR(base64);
       
@@ -190,6 +228,7 @@ export const useScanner = () => {
     facingMode,
     zoom,
     exposure,
+    capabilities,
     resolutionInfo,
     startCamera,
     closeCamera,

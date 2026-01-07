@@ -45,6 +45,7 @@ const Serves = () => {
     facingMode,
     zoom,
     exposure,
+    capabilities,
     resolutionInfo,
     toggleFacingMode,
     updateConstraint
@@ -188,9 +189,7 @@ const Serves = () => {
                 stream={stream}
                 processOCROnCrop={processOCROnCrop}
                 // Pro Props
-                facingMode={facingMode}
-                zoom={zoom}
-                exposure={exposure}
+                capabilities={capabilities}
                 resolutionInfo={resolutionInfo}
                 toggleFacingMode={toggleFacingMode}
                 updateConstraint={updateConstraint}
