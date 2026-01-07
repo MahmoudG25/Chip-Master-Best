@@ -4,6 +4,7 @@ import { performOCR } from '../services/ocrService';
 export const useScanner = () => {
   const [isScannerOpen, setIsScannerOpen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [error, setError] = useState(null);
   const [stream, setStream] = useState(null);
   const [facingMode, setFacingMode] = useState('environment');
   const [zoom, setZoom] = useState(1);
@@ -26,42 +27,59 @@ export const useScanner = () => {
   const startCamera = useCallback(async (mode = 'environment') => {
     setIsScannerOpen(true);
     setFacingMode(mode);
+    setError(null);
+
+    // 1. Context & API Verification
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      const isSecure = window.isSecureContext;
+      const errorMsg = !isSecure 
+        ? "Camera inhibited: Insecure context. Please use HTTPS."
+        : "Camera API not supported by this browser.";
+      setError(errorMsg);
+      return;
+    }
+
     try {
+      // Primary Attempt: High Performance
       const constraints = {
         video: {
           facingMode: { ideal: mode },
-          width: { ideal: 1920 }, // 1080p is sweet spot for mobile 60fps
-          height: { ideal: 1080 },
-          frameRate: { ideal: 60 },
-          // Focus and Exposure hints
-          focusMode: { ideal: 'continuous' },
-          exposureMode: { ideal: 'continuous' },
-          whiteBalanceMode: { ideal: 'continuous' }
+          width: { ideal: 1920, min: 640 }, 
+          height: { ideal: 1080, min: 480 },
+          frameRate: { ideal: 60 }
         },
         audio: false
       };
 
-      const mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
+      let mediaStream;
+      try {
+        mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
+      } catch (e) {
+        console.warn("High-perf camera failed, falling back to basic:", e);
+        // Fallback: Basic Back/Front camera without strict resolution
+        mediaStream = await navigator.mediaDevices.getUserMedia({ 
+            video: { facingMode: mode },
+            audio: false 
+        });
+      }
+
       setStream(mediaStream);
       
       const track = mediaStream.getVideoTracks()[0];
       const settings = track.getSettings();
-      setResolutionInfo({ width: settings.width, height: settings.height });
+      setResolutionInfo({ width: settings.width || 0, height: settings.height || 0 });
       
       const caps = detectCapabilities(track);
 
-      if (videoRef.current) {
-        videoRef.current.srcObject = mediaStream;
-        videoRef.current.play().catch(e => console.error("Camera play error:", e));
-      }
-
-      // Pro features: Auto-focus and Auto-exposure
-      const advanced = {};
-      if (caps.focusMode?.includes('continuous')) advanced.focusMode = 'continuous';
-      if (caps.exposureMode?.includes('continuous')) advanced.exposureMode = 'continuous';
-      
-      if (Object.keys(advanced).length > 0) {
-        await track.applyConstraints({ advanced: [advanced] });
+      // Apply hardware-level continuous focus/exposure if available
+      if (track.applyConstraints) {
+        const advanced = {};
+        if (caps.focusMode?.includes('continuous')) advanced.focusMode = 'continuous';
+        if (caps.exposureMode?.includes('continuous')) advanced.exposureMode = 'continuous';
+        
+        if (Object.keys(advanced).length > 0) {
+            await track.applyConstraints({ advanced: [advanced] }).catch(p => console.warn("Apply error:", p));
+        }
       }
 
       if (caps.zoom) {
@@ -69,8 +87,17 @@ export const useScanner = () => {
       }
     } catch (err) {
       console.error("Camera access error:", err);
-      setIsScannerOpen(false);
-      throw new Error(err.message === 'Permission denied' ? 'Please allow camera access' : 'Cannot access camera');
+      let msg = "Could not start camera.";
+      if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+        msg = "Camera permission denied. Check your browser settings.";
+      } else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
+        msg = "No suitable camera hardware detected.";
+      } else if (err.name === 'NotReadableError' || err.name === 'TrackStartError') {
+        msg = "Camera hardware is currently locked by another process.";
+      } else if (err.name === 'OverconstrainedError') {
+        msg = "Camera hardware cannot meet high-performance requirements.";
+      }
+      setError(msg);
     }
   }, []);
 
@@ -118,21 +145,32 @@ export const useScanner = () => {
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const data = imageData.data;
 
+    // 1. Convert to Grayscale & Boost Contrast
+    let blackPixels = 0;
     for (let i = 0; i < data.length; i += 4) {
-      // 1. Grayscale (Luminance method)
-      const gray = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+      const avg = (data[i] + data[i+1] + data[i+2]) / 3;
+      let val = (avg - 128) * 1.8 + 128;
+      val = Math.max(0, Math.min(255, val));
       
-      // 2. Contrast Enhancement (Simplified: mid-tone expansion)
-      let adjusted = (gray - 128) * 1.5 + 128;
-      
-      // 3. Simple Thresholding (Bitonal: Black or White)
-      const threshold = 140; 
-      const binarized = adjusted > threshold ? 255 : 0;
-      
-      data[i] = binarized;
-      data[i + 1] = binarized;
-      data[i + 2] = binarized;
+      const final = val > 120 ? 255 : 0; 
+      if (final === 0) blackPixels++;
+
+      data[i] = final;
+      data[i + 1] = final;
+      data[i + 2] = final;
     }
+
+    // 3. Intelligent Inversion (Tesseract prefers black text on white background)
+    // If the majority of the image is black, it's likely light text on dark background.
+    const totalPixels = data.length / 4;
+    if (blackPixels > totalPixels * 0.5) {
+      for (let i = 0; i < data.length; i += 4) {
+        data[i] = 255 - data[i];
+        data[i + 1] = 255 - data[i + 1];
+        data[i + 2] = 255 - data[i + 2];
+      }
+    }
+    
     ctx.putImageData(imageData, 0, 0);
   };
 
@@ -203,8 +241,7 @@ export const useScanner = () => {
 
       // MANDATORY Pre-processing for Precision
       preprocessCanvas(canvas);
-
-      const base64 = canvas.toDataURL('image/jpeg', 1.0).split(',')[1];
+      const base64 = canvas.toDataURL('image/png').split(',')[1];
       const detectedCode = await performOCR(base64);
       
       if (detectedCode) {
@@ -228,6 +265,7 @@ export const useScanner = () => {
     facingMode,
     zoom,
     exposure,
+    error,
     capabilities,
     resolutionInfo,
     startCamera,

@@ -45,6 +45,7 @@ const Serves = () => {
     facingMode,
     zoom,
     exposure,
+    error,
     capabilities,
     resolutionInfo,
     toggleFacingMode,
@@ -190,9 +191,11 @@ const Serves = () => {
                 processOCROnCrop={processOCROnCrop}
                 // Pro Props
                 capabilities={capabilities}
+                error={error}
                 resolutionInfo={resolutionInfo}
                 toggleFacingMode={toggleFacingMode}
                 updateConstraint={updateConstraint}
+                zoom={zoom}
             />
         </div>
       </main>

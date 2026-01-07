@@ -17,6 +17,7 @@ export const ScannerModule = ({
   stream,
   processOCROnCrop,
   capabilities,
+  error,
   resolutionInfo,
   toggleFacingMode,
   updateConstraint,
@@ -102,7 +103,28 @@ export const ScannerModule = ({
 
           {/* Viewfinder Workspace */}
           <div className="relative flex-grow flex items-center justify-center bg-black overflow-hidden">
-            {!capturedImage ? (
+            {error ? (
+                <div className="flex flex-col items-center justify-center p-8 text-center space-y-6 z-50">
+                    <div className="w-20 h-20 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center">
+                        <X size={40} className="text-red-500" />
+                    </div>
+                    <div className="space-y-2">
+                        <h3 className="text-white font-black text-xl tracking-tight uppercase">
+                            {lang === 'ar' ? 'خطأ في الكاميرا' : 'Hardware Blocked'}
+                        </h3>
+                        <p className="text-white/60 text-sm max-w-[20rem] leading-relaxed">
+                            {error}
+                        </p>
+                    </div>
+                    <Button 
+                        onClick={onClose}
+                        variant="ghost"
+                        className="border border-white/10 text-white/70 hover:text-white"
+                    >
+                        {lang === 'ar' ? 'إغلاق' : 'Dismiss'}
+                    </Button>
+                </div>
+            ) : !capturedImage ? (
               <>
                 <video 
                   ref={videoRef} 
@@ -233,11 +255,24 @@ export const ScannerModule = ({
                         <motion.button
                             whileTap={{ scale: 0.9 }}
                             onClick={async () => {
-                                if (!completedCrop) return;
-                                const code = await processOCROnCrop(capturedImage, completedCrop);
-                                if (code) {
-                                    onDetected(code);
-                                    onClose();
+                                if (!completedCrop) {
+                                  console.warn("No crop area selected.");
+                                  return;
+                                }
+                                console.log("Starting OCR on crop area...");
+                                try {
+                                    const code = await processOCROnCrop(capturedImage, completedCrop);
+                                    console.log("OCR Result:", code);
+                                    
+                                    if (code) {
+                                        onDetected(code);
+                                        onClose();
+                                    } else {
+                                        alert(lang === 'ar' ? 'تعذر قراءة الكود. يرجى المحاولة مرة أخرى بوضوح أكبر.' : 'Could not read code. Please try again with better focus or a closer crop.');
+                                    }
+                                } catch (err) {
+                                    console.error("OCR Confirmation Error:", err);
+                                    alert(lang === 'ar' ? 'حدث خطأ أثناء معالجة الصورة.' : 'An error occurred while processing the image.');
                                 }
                             }}
                             disabled={isProcessing}
